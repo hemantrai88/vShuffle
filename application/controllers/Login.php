@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Land extends CI_Controller {
+class Login extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -22,16 +22,13 @@ class Land extends CI_Controller {
 		$this->load->view('Pg_Playlist');
 	}
 	
-	public function sheet()
-	{
-		$this->db->select('*');
-		$this->db->from('test');
-		$arrStatus = $this->db->get();
-		$arrStatus = $arrStatus->result_array();
-		print_r($arrStatus);
+	public function validate(){
+		echo "<pre>";
+		print_r($_POST);
 		exit;
-		$this->load->view('Pg_sheet');
 	}
+	
+
 }
 
 /* End of file welcome.php */

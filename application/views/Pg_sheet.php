@@ -4,9 +4,6 @@
     <script src="<?php echo BASE_PATH; ?>js/jquery.js"></script>
   
       <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-    <link href="<?php echo BASE_PATH; ?>css/bootstrap.min.css" rel="stylesheet">
-
-      <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="<?php echo BASE_PATH; ?>css/bootstrap.min.filter.css" rel="stylesheet">
 
     <!-- Custom CSS -->
@@ -14,16 +11,10 @@
     
     <link href="<?php echo BASE_PATH; ?>css/jquery-ui-1.10.2.custom.min.css" media="screen" rel="stylesheet" type="text/css">
     <link href="<?php echo BASE_PATH; ?>css/stream.css" media="screen" rel="stylesheet" type="text/css">
-    <link href="<?php echo BASE_PATH; ?>css/datepicker.css" media="screen" rel="stylesheet" type="text/css">
     <script src="<?php echo BASE_PATH; ?>js/jquery-ui-1.10.2.custom.min.js" type="text/javascript"></script>
     <script src="<?php echo BASE_PATH; ?>js/filter.js" type="text/javascript"></script>
     <script src="<?php echo BASE_PATH; ?>js/movies.js" type="text/javascript"></script>
-    <script src="<?php echo BASE_PATH; ?>js/filterindex.js" type="text/javascript"></script>
-    <script src="<?php echo BASE_PATH; ?>js/bootstrap-datepicker.js" type="text/javascript"></script> 
-
-	<!-- jQuery easing plugin -->
-	<script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
-    
+    <script src="<?php echo BASE_PATH; ?>js/filterindex.js" type="text/javascript"></script>    
     
 
 <script>
@@ -111,42 +102,14 @@ $(document).ready(function(){
 	})
 	
 	$('#signup_window').click(function(){
-		$('#login_div').hide();
-		$('#register_div').toggle();
+		$('#login_form').hide();
+		$('#register_form').toggle();
 	});
 	
 	$('#login_window').click(function(){
-		$('#register_div').hide();
-		$('#login_div').toggle();
+		$('#register_form').hide();
+		$('#login_form').toggle();
 	});
-	
-	$('#submit_login').click(function(){
-		
-		var credentials=$('#login_form').serialize();
-
-        $.ajax({
-			type: 'POST',
-			url: "Login/validate",
-			data: credentials,
-			dataType: 'html',
-			success: function (result){
-			    
-			    console.log(result);
-		                        
-			}
-		});		
-		
-	});
-	
-	$('#dob').datepicker({
-		format: 'dd-mm-yyyy',
-		viewMode: 2
-	});
-	
-	$('#dob').keypress(function(e){
-		e.preventDefault();
-	});
-	
 
 });
 </script>
@@ -331,42 +294,14 @@ $(document).ready(function(){
 		background: #27AE60;
 		color: white;
 	}
-	
-	#login_div{
-		min-height: 45em;
-	}
-	
-	#register_div{
-		min-height: 45em;
-	}
-	.navbar{
-		border-bottom: 0.5em solid #DDDDDD;
-	}
-	#gender {
-	    -webkit-appearance: none;
-	    -moz-appearance: none;
-	    appearance: none;
-		border: 1px solid #ccc;
-		border-radius: 3px;
-		margin-bottom: 10px;
-		width: 100%;
-		height:4em;
-		box-sizing: border-box;
-		font-family: montserrat;
-		color: #2C3E50;
-		font-size: 13px;	
-	}
-	
-	.datepicker{
-		width: 23%;
-	}
-	
+
 </style>
+
 </head>
 <body id="page-top" class="index">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top header-nav">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -399,24 +334,22 @@ $(document).ready(function(){
     </nav>
     
     <br />
-<div id="login_div" style="display: none;">
+
 <!-- login form -->
-<form id="login_form" method="POST" action="Login/validate">
-	<br /><br />
+<form id="login_form" style="display: none;">
+
 	<!-- fieldsets -->
 	<fieldset>
 		<h2 class="fs-title">Log In</h2>
 		<h3 class="fs-subtitle">Please provide your login details:</h3>
 		<input type="text" name="email" placeholder="Email" />
 		<input type="password" name="pass" placeholder="Password" />
-		<input type="submit" name="login_button" class="submit action-button"id="submit_login" value="Log-in" />
+		<input type="button" name="login_button" class="submit action-button" value="Log-in" />
 	</fieldset>
 </form>
-</div>
-<div id="register_div" style="display: none;">
-	<br /><br />
+
 <!-- registration form -->
-<form id="register_form">
+<form id="register_form" style="display: none;">
 	<!-- progressbar -->
 	<ul id="progressbar">
 		<li class="active">Account Setup</li>
@@ -428,12 +361,11 @@ $(document).ready(function(){
 		<h2 class="fs-title">Create your account</h2>
 		<h3 class="fs-subtitle">This is step 1</h3>
 		<input type="text" name="email" placeholder="Email" />
-		<input type="text" name="username" placeholder="Username" />
 		<input type="password" name="pass" placeholder="Password" />
 		<input type="password" name="cpass" placeholder="Confirm Password" />
 		<input type="button" name="next" class="next action-button" value="Next" />
 	</fieldset>
-	<!-- <fieldset>
+	<fieldset>
 		<h2 class="fs-title">Social Profiles</h2>
 		<h3 class="fs-subtitle">Your presence on the social network</h3>
 		<input type="text" name="twitter" placeholder="Twitter" />
@@ -441,28 +373,30 @@ $(document).ready(function(){
 		<input type="text" name="gplus" placeholder="Google Plus" />
 		<input type="button" name="previous" class="previous action-button" value="Previous" />
 		<input type="button" name="next" class="next action-button" value="Next" />
-	</fieldset> -->
+	</fieldset>
 	<fieldset>
 		<h2 class="fs-title">Personal Details</h2>
 		<h3 class="fs-subtitle">We will never sell it</h3>
 		<input type="text" name="fname" placeholder="First Name" />
 		<input type="text" name="lname" placeholder="Last Name" />
-		<input type="text" name="dob" id="dob" placeholder="Date of birth" />
-		<select name="gender" id="gender">
-			<option value="" selected="selected">Gender</option>
-			<option value="male">Male</option>
-			<option value="female">Female</option>
-		</select>
+		<input type="text" name="phone" placeholder="Phone" />
+		<textarea name="address" placeholder="Address"></textarea>
 		<input type="button" name="previous" class="previous action-button" value="Previous" />
 		<input type="submit" name="submit" class="submit action-button" value="Submit" />
 	</fieldset>
 </form>
-</div>
 
-<br /><br /><br /><br /><br />
+
 
     <div class="container">
+      <h1 class="title">Filter.js</h1>
       <div class="sidebar col-span-3">
+        <div class="row">
+          <h4 class="col-span-6"> Movies (<span id="total_movies">250</span>)</h4>
+          <div class="col-span-6 progress">
+            <div class="progress-bar" id="stream_progress" style="width: 0%">0 %</div>
+          </div>
+        </div>
         <div>
           <input type="text" id="searchbox" placeholder="Search...">
           <span class="glyphicon glyphicon-search search-icon"></span>

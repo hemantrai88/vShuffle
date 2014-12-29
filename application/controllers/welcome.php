@@ -19,11 +19,23 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$this->load->view('Pg_Land');
+	}
+	
+	public function video_details()
+	{
+		 $url='https://www.youtube.com/watch?v='.$_POST['vid'];
+		 $youtube = "http://www.youtube.com/oembed?url=". $url ."&format=json";
+		
+		 $curl = curl_init($youtube);
+		 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		 $return = curl_exec($curl);
+		 curl_close($curl);
+		 echo $return;
 	}
 	
 	public function land(){
-		$this->load->view('Pg_Land.php');
+		$this->load->view('Pg_Land');
 	}
 }
 
