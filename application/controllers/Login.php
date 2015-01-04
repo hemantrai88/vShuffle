@@ -2,30 +2,73 @@
 
 class Login extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
+	function __construct(){
+		parent::__construct();
+		
+		$this->load->model('login_model');
+		
+		/*
+		if($this->session->IS_LOGED_IN() == 0){
+				redirect('login');
+				}
+				*/
+		
+	}	 
+	 
+	 
 	public function index()
 	{
 		$this->load->view('Pg_Playlist');
 	}
 	
 	public function validate(){
-		echo "<pre>";
-		print_r($_POST);
-		exit;
+		$credentials=$this->input->post();
+
+		$validate_login=$this->login_model->validate_credentials($credentials);
+		
+		if(count($validate_login)>0){
+			Echo json_encode($validate_login);
+		}else{
+			echo 0;
+		}
+		
+	}
+	
+	public function signup()
+	{
+		$signup_details=$this->input->post();
+		
+		$location_string=implode("||", $signup_details['locations']);
+		$language_string=implode("||", $signup_details['languages']);
+		
+		$signup_details['location_string'] = $location_string;
+		$signup_details['language_string'] = $language_string;
+		
+		echo $this->login_model->signup($signup_details);
+		
+	}
+	
+	public function chekEmail()
+	{
+		
+		$email=$this->input->post('email');
+		
+		echo $this->login_model->check_email($email);
+		
+	}
+	
+	public function chekUsername()
+	{
+		
+		$username=$this->input->post('username');
+		
+		echo $this->login_model->check_username($username);
+		
+	}
+	
+		function logout()
+	{
+		$this->session->sess_destroy();
 	}
 	
 
