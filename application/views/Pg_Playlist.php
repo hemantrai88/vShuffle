@@ -12,39 +12,43 @@
     <title>Video-Shuffle</title>
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo BASE_PATH; ?>css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/freelancer.css" rel="stylesheet">
+    <link href="<?php echo BASE_PATH; ?>css/freelancer.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo BASE_PATH; ?>font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
         <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="<?php echo BASE_PATH; ?>js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="<?php echo BASE_PATH; ?>js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="js/classie.js"></script>
-    <script src="js/cbpAnimatedHeader.js"></script>
+    <script src="<?php echo BASE_PATH; ?>js/classie.js"></script>
+    <script src="<?php echo BASE_PATH; ?>js/cbpAnimatedHeader.js"></script>
 
     <!-- Contact Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
+    <script src="<?php echo BASE_PATH; ?>js/jqBootstrapValidation.js"></script>
+    <script src="<?php echo BASE_PATH; ?>js/contact_me.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="js/freelancer.js"></script>
+    <script src="<?php echo BASE_PATH; ?>js/freelancer.js"></script>
 
-    <link rel="stylesheet" href="colorbox/colorbox.css" />
-    <script src="colorbox/jquery.colorbox.js"></script>
+    <link rel="stylesheet" href="<?php echo BASE_PATH; ?>colorbox/colorbox.css" />
+    <script src="<?php echo BASE_PATH; ?>colorbox/jquery.colorbox.js"></script>
     
-    <link href="scroll/src/perfect-scrollbar.css" rel="stylesheet">
-    <script src="scroll/src/perfect-scrollbar.js"></script>
+    <link href="<?php echo BASE_PATH; ?>scroll/src/perfect-scrollbar.css" rel="stylesheet">
+    <script src="<?php echo BASE_PATH; ?>scroll/src/perfect-scrollbar.js"></script>
+    
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    
+    <link href="<?php echo BASE_PATH; ?>css/playlist.css" rel="stylesheet">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -70,6 +74,10 @@
     var done = false;
     var player;
     
+    function getPlayList(){
+        return playlist;
+    }
+
     function onYouTubeIframeAPIReady() {
 
     }    
@@ -138,6 +146,9 @@
             	
             	//$('#player').hide();
             	
+            	$('#add_video_link').click(function(){
+            		$('#add_url_div').slideToggle();
+            	});
                 
 
                 $('#p_next').click(function(){
@@ -146,16 +157,13 @@
                     console.log(playing_index+1);
                     console.log(playlist.length-1);
 			        if((playing_index)!=(playlist.length-1)){
-			        	console.log("IF");
 			        	v_id=playlist[playing_index+1];
 			        }else{
 			        	v_id=playlist[0];
-			        	console.log("ELSE");
 			        }
-			        console.log(v_id);    	
                     $.ajax({
 							type: 'POST',
-							url: "video/video_details",
+							url: "<?php echo BASE_PATH; ?>video/video_details",
 							data: {vid:v_id},
 							dataType: 'html',
 							success: function (result){
@@ -229,7 +237,7 @@
                     
                     $.ajax({
 							type: 'POST',
-							url: "video/video_details",
+							url: "<?php echo BASE_PATH; ?>video/video_details",
 							data: {vid:video_id},
 							dataType: 'html',
 							success: function (result){
@@ -285,283 +293,128 @@
                     
                 });
 
-                $(".inline").colorbox({inline:true, width:"25%", closeButton:true,transition:"none", top:"7%", right:"10%",opacity:0.5});
+               // $(".inline").colorbox({inline:true, width:"25%", closeButton:true,transition:"none", top:"7%", right:"10%",opacity:0.5});
                 
-                $(document).bind('cbox_load', function(){
-				  $('#new_url').focus();
-				});
+                // $(document).bind('cbox_load', function(){
+				  // $('#new_url').focus();
+				// });
                 
                 
 
 
             });
+
+            $(document).ready(function(){
+                $('#save_playlist').click(function(){
+                    var playlist_arr = getPlayList();
+                    var playlist_save_name = $('#playlist_name').val();
+                    if(playlist_arr.length<=0 || playlist_save_name==''){
+                        alert('Please provide all data');
+                    }else{
+                        $.ajax({
+							type: 'POST',
+							url: "<?php echo BASE_PATH; ?>playlist/save_playlist",
+							data: {playlist:playlist_arr, name: playlist_save_name},
+							dataType: 'html',
+							success: function (result){
+		                        var obj = jQuery.parseJSON(result);
+		                        console.log(obj);
+							}
+						}); 
+                    }
+                    
+                });
+            });
+
         </script>
-
-<style type="text/css">
-
-
-#playQueue{
-	overflow: hidden;
-    position: relative;
-    height:450px; 
-    float: right; 
-    width: 275px;
-    padding-top:2%;
-}
-
-#playQueue ul{
-  width:250px;
-  list-style:none;
-  padding:0;
-  text-align:center;
-  height: 450px;
-
-  margin-top: -10%;
-}
-#playQueue ul > li{
-  margin-bottom:15px;
-}
-#playQueue li span{
-  display:block;
-  clear:both;
-  background:#5A9BD5;
-  padding:25px 0;
-}
-#playQueue ul ul li{
-  float:left;
-  width:90px;
-  margin:15px 15px 0 0;
-}
-#playQueue ul ul li:nth-child(3){
-  margin-right:0;
-}
-#playQueue ul li a{
-  background:#00628B;
-  display:block;
-  width:100%;
-  padding:25px 0;
-  text-decoration:none;
-  transition: 0.4s;
-  color:#fff;
-  font-weight: bold;
-}
-#playQueue ul li a:hover{
-  background:#ffffff;
-  color: #00628B;
-  font-weight: bold;
-}
-
-/*::-webkit-scrollbar {
-    width: 12px;
-}
-::-webkit-scrollbar-track {
-    background-color: #eaeaea;
-    border-left: 1px solid #ccc;
-}
-::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-}
-::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
-}*/
-
-
-/*.row{
-    margin-top: -5%;
-}*/
-
-#new_url{
-	border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px #ddd inset;
-    box-sizing: border-box;
-    display: inline-block;
-    padding: 0.5em 0.6em;
-    width: 80%;
-}
-
-#add_you{
-	border-bottom: 1px solid #e5e5e5;
-    color: #333;
-    display: block;
-    margin-bottom: 0.3em;
-    padding: 0.3em 0;
-    width: 100%;
-}
-
-#playback{
-	margin-bottom: 2%;
-}
-
-.vid_thumb{
-	width:120px;
-	height:90px;
-	display: inline-block;
-	margin-left:-58%;
-	margin-top:2%;
-}
-
-#now_playing{
-	width: 65%;
-    margin-top: 6%;
-    background-color:#00628b;
-}
-
-.now_title{
-	display: inline-block;
-    margin-left: 2%;
-    margin-top: -2%;
-    font-weight:bold;
-}
-
-.playing_label{
-	background-color: #00628b;
-    float: left;
-    font-size: 0.8em;
-    font-weight: bold;
-    padding-left: 1%;
-    padding-right: 1%;
-    transform: rotate(90deg);
-    transform-origin: left top 0;
-}
-
-.playing_next_label{
-	background-color: #00628b;
-    float: left;
-    font-size: 0.8em;
-    font-weight: bold;
-    padding-left: 1%;
-    padding-right: 1%;
-    transform: rotate(90deg);
-    transform-origin: left top 0;
-}
-
-#player_body{
-	float:left;
-	background-color: #393939; 
-	height: 31em;
-	padding: 1% 0; 
-	width: 65%; 
-	border-radius: 1em;
-}
-
-
-/*#playQueue::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
-}
-
-#playQueue::-webkit-scrollbar
-{
-	width: 12px;
-	background-color: #F5F5F5;
-}
-
-#playQueue::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #555;
-}*/
-
-
-
-</style>
 
 </head>
 
 <body id="page-top" class="index">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a class='inline' href="#inline_content">Add Video</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
-    <!-- This contains the hidden content for inline calls -->
-        <div style='display:none'>
-            <div id='inline_content' style='padding:10px;'>
-            	<label id="add_you">Paste the Youtube URL here</label>
-            	<br />
-            	<input type="text" id="new_url" />
-            	<img id="addurl" src="img/plus.png" class="img-responsive" alt="" style="height: 35px; width: 35px; display: inline; margin-left: 5%; margin-top: -2%;">
-            	<!-- <button id="addurl">Add new video</button> -->
-            	<br />
-            </div>
-        </div>
+<?php $this->load->view('skeleton/logged_in_nav'); ?>
 
     <!-- Header -->
     <header>
-        <div class="container">
+        <div class="container" style="width: 90%; !important;">
+        <!--
+        <div id="add_url_div" style="display:none; float: right; width: 30%;">
+                    <input type="text" style="width: 80%;">
+                  <input type="button" value="Add" style="margin-left: 5%;">
+                  </div>-->
+        
             <div class="row">
                 <div class="col-lg-12">
-                    <div id="player_body">
-                    	<div id="playing_top"></div>
-                    	<div id="start_screen" style="width:98%; height:80%; background-color: #e6e6dc; margin-left: 1%;">
-                    		
-                    	</div>
-                    	<input type="hidden" id="playing_id" value="" />
-                    	<div id="player"></div>
-	                    
-	                    <br />
-	                    <img id="p_prev" src="img/p_prev.png" class="img-responsive" alt="" style="float: left; margin-left: 5%; background-color: #fff; border-radius: 1em; ">
-	                    <img id="p_play" src="img/p_play.png" class="img-responsive" alt="" style="float: left; margin-left: 5%; background-color: #fff; border-radius: 1em;">
-	                    <img id="p_next" src="img/p_next.png" class="img-responsive" alt="" style="float: left; margin-left: 5%; background-color: #fff; border-radius: 1em;">
-	                    <img id="p_stop" src="img/p_stop.png" class="img-responsive" alt="" style="float: left; margin-left: 5%; background-color: #fff; border-radius: 1em;">
-	                    
+                    <div class="col-lg-8">
+                        
+                        <div id="player_body">
+                        <div id="playing_top"></div>
+                        <div id="start_screen" style="width:98%; height:80%; background-color: #e6e6dc; margin-left: 1%;">
+                            
+                        </div>
+                        <input type="hidden" id="playing_id" value="" />
+                        <div id="player"></div>
+                        
+                        <br />
+                        <img id="p_prev" src="<?php echo BASE_PATH; ?>img/p_prev.png" class="img-responsive" alt="" style="float: left; margin-left: 5%; background-color: #fff; border-radius: 1em; ">
+                        <img id="p_play" src="<?php echo BASE_PATH; ?>img/p_play.png" class="img-responsive" alt="" style="float: left; margin-left: 5%; background-color: #fff; border-radius: 1em;">
+                        <img id="p_next" src="<?php echo BASE_PATH; ?>img/p_next.png" class="img-responsive" alt="" style="float: left; margin-left: 5%; background-color: #fff; border-radius: 1em;">
+                        <img id="p_stop" src="<?php echo BASE_PATH; ?>img/p_stop.png" class="img-responsive" alt="" style="float: left; margin-left: 5%; background-color: #fff; border-radius: 1em;">
+
+
+                    </div>
                 </div>
-                    <br />
+                <div class="col-lg-4">
                     <div id="playQueue" style="">
                         <ul id="vidList">
                             <!-- <li><a href="#">Travis - My Eyes (Official Video)</a></li> -->
                         </ul>
                     </div>
+                    <div id="save_playlist_form">
+                        <label>Playlist Name: </label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="playlist_name" id="playlist_name" />
+                        <button id="save_playlist" name="save_playlist">Save Playlist</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-8">
+                    <div id="now_playing"> </div>
+                </div>
+                <div class="col-lg-4">
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+    </header>
+                    
+	                    
+<!--                 </div>
+                    <br />
+                    
+                    </div>
+                    <div id="save_playlist_form">
+	                    <label>Playlist Name: </label>
+	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                    <input type="text" name="playlist_name" id="playlist_name" />
+	                    <button id="save_playlist" name="save_playlist">Save Playlist</button>
+					</div>
 					<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     <br /><br />
                     <div id="now_playing">
 	                    	
 	                    	
-	                    </div>
+	                </div>
 
                     <div class="intro-text">
                         <!-- <hr class="star-light"> -->
-                    </div>
+<!--                    </div>
                 </div>
             </div>
         </div>
-    </header>
+    </header> -->
 
     <!-- Footer -->
     <footer class="text-center">
@@ -570,7 +423,7 @@
                 <div class="row">
                     <div class="footer-col col-md-4">
                         <h3>Location</h3>
-                        <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+                        
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>Around the Web</h3>
@@ -593,8 +446,8 @@
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>About Freelancer</h3>
-                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                        <h3>About vShuffle</h3>
+                       
                     </div>
                 </div>
             </div>
@@ -603,7 +456,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; Your Website 2014
+                        Copyright &copy; vShuffle 2015
                     </div>
                 </div>
             </div>
@@ -616,231 +469,6 @@
             <i class="fa fa-chevron-up"></i>
         </a>
     </div>
-
-    <!-- Portfolio Modals -->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/cabin.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/cake.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/circus.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/game.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/safe.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/submarine.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 
 </body>

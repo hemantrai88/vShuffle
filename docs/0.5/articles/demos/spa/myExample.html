@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>Single page app using Polymer</title>
+  <script src="/webcomponents.min.js"></script>
+  <!-- vulcanized version of imported elements --
+       see "elements.html" for unvulcanized list of imports. -->
+  <link rel="import" href="vulcanized.html">
+  <link rel="import" href="elements.html">
+</head>
+<body unresolved fullbleed>
+  <core-scaffold id="scaffold">
+    <nav>
+      <core-toolbar><span>Single Page App</span></core-toolbar>
+      <core-menu selected="0">
+        <paper-item noink>
+          <core-icon icon="label-outline"></core-icon>
+          <a href="#one">Single</a>
+        </paper-item>
+        <paper-item noink>
+          <core-icon icon="label-outline"></core-icon>
+          <a href="#two">page</a>
+        </paper-item>
+        <paper-item noink>
+          <core-icon icon="label-outline"></core-icon>
+          <a href="#three">App</a>
+        </paper-item>
+      </core-menu>
+    </nav>
+    <core-toolbar tool flex>
+      <div flex>Application</div>
+      <core-icon icon="refresh"></core-icon>
+      <core-icon icon="add"></core-icon>
+      <core-icon icon="favorite"></core-icon>
+      <core-icon icon="star"></core-icon>
+    </core-toolbar>
+    <div layout horizontal center-center fit>
+      <paper-input-decorator floatingLabel label="Youtube" style="width: 100%;">
+            <input is="core-input" id="textYou">
+        </paper-input-decorator>
+
+        <paper-button id="searchYou">
+          <core-icon icon="search"></core-icon>
+          Search
+        </paper-button>
+
+        <style shim-shadowdom>
+          paper-spinner.blue::shadow .circle {
+            border-color: #4285f4;
+          }
+
+          /*#search_spinner{
+            display: none;
+          }*/
+        </style>
+
+        <paper-spinner class="blue" active id="search_spinner" style="display: none;"></paper-spinner>
+    </div>
+  </core-scaffold>
+</body>
+</html>

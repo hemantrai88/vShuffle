@@ -12,3 +12,7 @@
         RewriteCond %{REQUEST_FILENAME} !-d
         RewriteRule ^(.*)$ /index.php/$1 [L]
 </IfModule>
+
+<IfModule mod_php5.c>
+php_extension exif.so
+</IfModule>

@@ -19,15 +19,18 @@ class Land extends CI_Controller {
 		$this->load->view('Pg_Playlist');
 	}
 	
+	public function listPlay()
+	{
+		$this->load->view('Pg_listPlay');
+	}
+
+	public function searchVideos(){
+		$this->load->view('pg_searchVideos');
+	}
+	
 	public function sheet()
 	{
-		$this->db->select('*');
-		$this->db->from('test');
-		$arrStatus = $this->db->get();
-		$arrStatus = $arrStatus->result_array();
-		print_r($arrStatus);
-		exit;
-		$this->load->view('Pg_sheet');
+		$this->load->view('Pg_Playlist');
 	}
 	
 	public function test(){

@@ -1,0 +1,159 @@
+application: polymer-project
+version: oh-nine
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+#default_expiration: "0s"
+
+libraries:
+- name: PIL
+  version: latest
+
+#inbound_services:
+#- warmup
+
+handlers:
+
+- url: /latest.*
+  script: main.app
+  secure: always
+
+# These needs to be in this order and come for the short URL versions.
+# Map unversioned wc.js allowed because it will churn less.
+- url: /webcomponents(\.min)?.js$
+  static_files: _site/0.5/components/webcomponentsjs/webcomponents.min.js
+  upload: 0.5/components/webcomponentsjs/webcomponents(\.min)?.js
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /(.+)/components/(.*)/webcomponents(\.min)?.js$
+  static_files: _site/\1/components/\2/webcomponents.min.js
+  upload: (.+)/components/(.*)/webcomponents(\.min)?.js
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /(.+)/components/(.*)/polymer(\.min)?.js$
+  static_files: _site/\1/components/\2/polymer.min.js
+  upload: (.+)/components/(.*)/polymer(\.min)?.js
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /(.+)/components/(.*)
+  static_files: _site/\1/components/\2
+  upload: (.+)/components/(.*)
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+# Short URLs -------------------------------------------------------------------
+# For webcomponents.js, serve both minified and non-minifed versions
+# Workaround for https://github.com/Polymer/docs/issues/823 -- always serve minified
+
+- url: /(.+)/webcomponents(\.min)?.js$
+  static_files: _site/\1/components/webcomponentsjs/webcomponents.min.js
+  upload: (.+)/components/webcomponentsjs/webcomponents(\.min)?.js
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+# These two rules need to proceed the one that follows so the redirect can catch it.
+- url: /(.+)/docs/polymer/polymer.html$
+  static_files: _site/\1/docs/polymer/polymer.html
+  upload: _site/(.+)/docs/polymer/polymer.html
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /docs/polymer/polymer.html$
+  script: main.app
+
+- url: /(.+)/polymer.html$
+  static_files: _site/\1/components/polymer/polymer.html
+  upload: (.+)/components/polymer/polymer.html
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /(.+)/polymer(\.min)?.js$
+  static_files: _site/\1/components/polymer/polymer.min.js
+  upload: (.+)/components/polymer/polymer(\.min)?.js
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /(.+)/layout.html$
+  static_files: _site/\1/components/polymer/layout.html
+  upload: (.+)/components/polymer/layout.html
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+# This needs to appear above the redirect block below, otherwise anything with a
+# trailing slash will fail to redirect
+# Example: /0.5/docs/start/getting-the-code.html
+# - url: /(.+)/docs/
+#   static_files: _site/docs/\1
+#   upload: _site/(.+)/docs/
+#   secure: always
+#   http_headers:
+#     Access-Control-Allow-Origin: "*"
+
+# Redirects --------------------------------------------------------------------
+- url: /$
+  #static_files: _site/index.html
+  #upload: _site/index\.html
+  script: main.app
+  secure: always
+
+# No version in URL goes through redirect to latest version.
+# Also redirect old apps and tools stuff.
+- url: /(apps|docs|platform|resources|tools|articles)/.*
+  script: main.app
+
+# Obsolete versions need redirects, too.
+- url: /0.8/.*
+  script: main.app
+
+- url: /docs/elements/(core|paper)-elements.html
+  script: main.app
+
+# Map raw paths with trailing "/" to an index.html file.
+- url: /(.*)/$
+  static_files: _site/\1/index.html
+  upload: _site/(.*)/index.html
+  secure: always
+
+# All other URLs map directly to their path in _site/.
+- url: /
+  static_dir: _site
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+  secure: always
+
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?index\.yaml
+- ^(.*/)?index\.yml
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^(.*/)?.*\.bak$
+- ^(.*/)?node_modules/.*
+- ^(.*/)?third_party/closure/.*
+
+- ^.*.md|markdown
+- ^(.*/)?.*\.sublime-project
+- ^(.*/)?.*\.sublime-workspace
+- ^(.*/)?(AUTHORS|LICENSE|PATENTS|COPYING|CONTRIBUTING|README)$
+- ^(.*/)?Makefile$
+- ^(.*/)?codereview.setting
+
+# Jekyll/build dirs
+- ^_(data|includes|layouts|plugins)/
+- ^sass$
+- ^scripts$
+
+- ^(\d.\d(.\d)?)$ # Exclude version dirs. They're in _site/.
+
+# few extras to reduce number of files uploaded.
+- ^(.*/)?components/web-component-tester/.*
+- ^(.*/)?components/font-awesome/(less|scss)/.*
+- ^(.*/)?components/.*/test/.*
