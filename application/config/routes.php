@@ -38,8 +38,8 @@
 |
 */
 
-$route['default_controller'] = "Land";
-$route['404_override'] = '';
+$route['default_controller'] = "welcome";
+$route['404_override'] = 'errors/page_missing';
 
 
 /* End of file routes.php */

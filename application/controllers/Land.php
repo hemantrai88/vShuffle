@@ -2,24 +2,41 @@
 
 class Land extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
+	function __construct(){
+		parent::__construct();
+		
+		$this->load->library('session');
+		
+		if($this->session->IS_LOGED_IN() == 0){
+			redirect('welcome');
+		}
+		
+	}
+
+
 	public function index()
 	{
-		$this->load->view('Pg_Land.php');
+		$this->load->view('Pg_Playlist');
+	}
+	
+	public function listPlay()
+	{
+		$this->load->view('Pg_listPlay');
+	}
+
+	public function searchVideos(){
+		$this->load->view('pg_searchVideos');
+	}
+	
+	public function sheet()
+	{
+		$this->load->view('Pg_Playlist');
+	}
+	
+	public function test(){
+		echo date_default_timezone_get();
+		$date = date('d/m/Y h:i:s a', time());
+		echo "<br />".$date;
 	}
 }
 

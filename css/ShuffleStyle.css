@@ -1,0 +1,375 @@
+	/*custom font*/
+	@import url(http://fonts.googleapis.com/css?family=Montserrat);
+	
+	/*basic reset*/
+	* {margin: 0; padding: 0;}
+	
+	body{
+		background-color: #00628B;
+	}
+	
+	/*form styles*/
+	#register_form {
+		width: 400px;
+		margin: 50px auto;
+		text-align: center;
+		position: relative;
+	}
+	#register_form fieldset {
+		background: white;
+		border: 0 none;
+		border-radius: 3px;
+		box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+		padding: 20px 30px;
+		
+		box-sizing: border-box;
+		width: 80%;
+		margin: 0 10%;
+		
+		/*stacking fieldsets above each other*/
+		position: absolute;
+	}
+	/*Hide all except first fieldset*/
+	#register_form fieldset:not(:first-of-type) {
+		display: none;
+	}
+	/*inputs*/
+	#register_form input, #register_form textarea {
+		padding: 15px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		margin: 10px 0;
+		width: 100%;
+		box-sizing: border-box;
+		font-family: montserrat;
+		color: #2C3E50;
+		font-size: 13px;
+	}
+	/*buttons*/
+	#register_form .action-button {
+		width: 100px;
+		background: #27AE60;
+		font-weight: bold;
+		color: white;
+		border: 0 none;
+		border-radius: 1px;
+		cursor: pointer;
+		padding: 10px 5px;
+		margin: 10px 5px;
+	}
+	#register_form .action-button:hover, #register_form .action-button:focus {
+		box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+	}
+	
+	#login_form {
+		width: 400px;
+		margin: 50px auto;
+		text-align: center;
+		position: relative;
+	}
+	#login_form fieldset {
+		background: white;
+		border: 0 none;
+		border-radius: 3px;
+		box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+		padding: 20px 30px;
+		
+		box-sizing: border-box;
+		width: 80%;
+		margin: 0 10%;
+		
+		/*stacking fieldsets above each other*/
+		position: absolute;
+	}
+	/*Hide all except first fieldset*/
+	#login_form fieldset:not(:first-of-type) {
+		display: none;
+	}
+	/*inputs*/
+	#login_form input, #register_form textarea input {
+		padding: 15px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		margin-bottom: 10px;
+		width: 100%;
+		box-sizing: border-box;
+		font-family: montserrat;
+		color: #2C3E50;
+		font-size: 13px;
+	}
+	/*buttons*/
+	#login_form .action-button {
+		width: 100px;
+		background: #27AE60;
+		font-weight: bold;
+		color: white;
+		border: 0 none;
+		border-radius: 1px;
+		cursor: pointer;
+		padding: 10px 5px;
+		margin: 10px 5px;
+	}
+	#login_form .action-button:hover, #login_form .action-button:focus {
+		box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+	}
+	
+	
+	/*headings*/
+	.fs-title {
+		font-size: 15px;
+		text-transform: uppercase;
+		color: #2C3E50;
+		margin-bottom: 10px;
+	}
+	.fs-subtitle {
+		font-weight: normal;
+		font-size: 13px;
+		color: #666;
+		margin-bottom: 20px;
+	}
+	/*Registration progressbar*/
+	#progressbar {
+		margin-bottom: 30px;
+		overflow: hidden;
+		/*CSS counters to number the steps*/
+		counter-reset: step;
+	}
+	#progressbar li {
+		list-style-type: none;
+		color: white;
+		text-transform: uppercase;
+		font-size: 9px;
+		width: 33.33%;
+		float: left;
+		position: relative;
+	}
+	#progressbar li:before {
+		content: counter(step);
+		counter-increment: step;
+		width: 20px;
+		line-height: 20px;
+		display: block;
+		font-size: 10px;
+		color: #333;
+		background: white;
+		border-radius: 3px;
+		margin: 0 auto 5px auto;
+	}
+	/*progressbar connectors*/
+	#progressbar li:after {
+		content: '';
+		width: 100%;
+		height: 2px;
+		background: white;
+		position: absolute;
+		left: -50%;
+		top: 9px;
+		z-index: -1; /*put it behind the numbers*/
+	}
+	#progressbar li:first-child:after {
+		/*connector not needed before the first step*/
+		content: none; 
+	}
+	/*marking active/completed steps green*/
+	/*The number of the step and the connector before it = green*/
+	#progressbar li.active:before,  #progressbar li.active:after{
+		background: #27AE60;
+		color: white;
+	}
+	
+	
+	
+	#register_div{
+		min-height: 45em;
+	}
+	.navbar{
+		border-bottom: 0.5em solid #DDDDDD;
+	}
+	#gender {
+	    -webkit-appearance: none;
+	    -moz-appearance: none;
+	    appearance: none;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		margin-bottom: 10px;
+		width: 100%;
+		height:4em;
+		box-sizing: border-box;
+		font-family: montserrat;
+		color: #CCCCCC;
+		font-size: 13px;	
+	}
+	
+	.datepicker{
+		width: 23%;
+	}
+	
+#cboxLoadedContent{      /*Use this for colorbox background*/
+
+}
+	
+fieldset{
+
+}	
+
+.spinner {
+  margin-left: 40%;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #27AE60;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes stretchdelay {
+  0%, 40%, 100% { 
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% { 
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}
+
+.validate_error{
+	color: red;
+	font-size: 0.75em;
+    line-height: 1em;
+}
+
+.validate_success_icon{
+	margin-top: -17%;
+	margin-left: 94%;
+	display: none;
+}
+
+/*.validateinfo-tooltip{
+	background-color: #fff;
+	border-color: #DDD;
+	border-radius:0;
+	font-size: 50%;
+}*/
+
+.ui-tooltip {
+
+	background: white;
+    color: #2c3e50;
+    font-size: 75%;
+
+  }
+
+.tooltip_outer_div{
+	
+	width: 100%;
+	background-color: #fff;
+	color: #2c3e50;
+	display: inline-block;
+	
+}
+
+.tooltip_head{
+	
+	width: 100%;
+	display: inline-block;
+	font-size: 120%;
+	
+}
+
+.tooltip_body{
+	width: 100%;
+	display: table;
+}	
+
+.tooltip_title{
+	
+	width: 30%;
+	display: table-cell;
+	font-weight: bold;
+	
+}
+
+.tooltip_desc{
+	
+	width: 70%;
+	display: table-cell;
+	
+}
+
+.ui-widget-header{
+	background: none repeat scroll 0 0 #00628b;
+}
+
+.ui-datepicker table{
+	background: none repeat scroll 0 0 #fff;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+	background: none repeat scroll 0 0 #00628b;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+	color: #fff;
+}
+
+.loadsite {
+  width: 100px;
+  height: 100px;
+  background-color: #FF851B;
+
+  margin: 25% auto 0 auto;
+  -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+  animation: rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes rotateplane {
+  0% { 
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+  } 50% { 
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+  } 100% { 
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}

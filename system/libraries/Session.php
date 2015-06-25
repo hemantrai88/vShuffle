@@ -784,7 +784,23 @@ class CI_Session {
 			log_message('debug', 'Session garbage collection performed.');
 		}
 	}
+	
+//-----------------------------------------------------------------------------------------------------------	
+//											Global 'Is logged in?' check
+//-----------------------------------------------------------------------------------------------------------
 
+function IS_LOGED_IN(){
+			$IS_LOGED_IN = $this->userdata('IS_LOGED_IN');
+			if(!isset($IS_LOGED_IN) || $IS_LOGED_IN != true)
+			{
+				return 0;
+				//echo 'You don\'t have permission to access this page. <a href="../login">Login</a>';	
+				//die();		
+				//$this->load->view('login_form');
+			}else{
+			return 1;
+			}
+	}
 
 }
 // END Session Class

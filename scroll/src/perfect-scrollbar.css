@@ -21,7 +21,7 @@
   .ps-container > .ps-scrollbar-x-rail > .ps-scrollbar-x {
     position: absolute;
     /* please don't change 'position' */
-    background-color: #00628B;
+    background-color: #AAAAAA;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -34,7 +34,7 @@
     /* there must be 'bottom' for ps-scrollbar-x */
     height: 8px; }
   .ps-container > .ps-scrollbar-x-rail.in-scrolling {
-    background-color: #00628B;
+    background-color: #AAAAAA;
     opacity: 0.9;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
     filter: alpha(opacity=90); }
@@ -59,7 +59,7 @@
   .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
     position: absolute;
     /* please don't change 'position' */
-    background-color: #00628B;
+    background-color: #AAAAAA;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -72,7 +72,7 @@
     /* there must be 'right' for ps-scrollbar-y */
     width: 8px; }
   .ps-container > .ps-scrollbar-y-rail.in-scrolling {
-    background-color: #00628B;
+    background-color: #AAAAAA;
     opacity: 0.9;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
     filter: alpha(opacity=90); }
@@ -81,21 +81,21 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
   filter: alpha(opacity=60); }
   .ps-container:hover > .ps-scrollbar-x-rail.in-scrolling, .ps-container:hover > .ps-scrollbar-y-rail.in-scrolling {
-    background-color: #00628B;
+    background-color: #AAAAAA;
     opacity: 0.9;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
     filter: alpha(opacity=90); }
 .ps-container:hover > .ps-scrollbar-x-rail:hover {
-  background-color: #00628B;
+  background-color: #AAAAAA;
   opacity: 0.9;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
   filter: alpha(opacity=90); }
   .ps-container:hover > .ps-scrollbar-x-rail:hover > .ps-scrollbar-x {
-    background-color: #00628B; }
+    background-color: #AAAAAA; }
 .ps-container:hover > .ps-scrollbar-y-rail:hover {
-  background-color: #00628B;
+  background-color: #AAAAAA;
   opacity: 0.9;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
   filter: alpha(opacity=90); }
   .ps-container:hover > .ps-scrollbar-y-rail:hover > .ps-scrollbar-y {
-    background-color: #00628B; }
+    background-color: #AAAAAA; }

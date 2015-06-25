@@ -1,0 +1,96 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-selector/core-selector.html">
+
+<polymer-element name="my-element">
+  <template>
+    <style>
+      .tag_option{
+        color: #fff;
+        background-color: #aaa;
+        font-weight: bold;
+        border-radius: 0.25em;
+        margin: 0.5%;
+        text-align: left;
+        padding: 1%;
+        width: 20%;
+        display: inline-block;
+      }
+
+      .core-selected {
+        background-color: #42abe2;
+        color: #fff;
+      }
+
+      .tag_selected{
+        
+        margin: 1% auto;
+        text-align: left;
+        background-color: #42abe2;
+        color: #fff;
+        border-radius: 0.25em;
+        padding: 1% 5% 1% 2%; 
+        font-weight: bold;
+        width: 25%;
+        display: inline-block;
+      }
+
+      #addPlTags{
+        margin: auto;
+        display: block;
+        background: #d23f31;
+        color: white;
+        width: 25%;
+      }
+
+      .hideOnLoad{
+        display: none;
+      }
+
+      .showHidden{
+        display: block !important;
+      }
+
+      
+
+    </style>
+
+    <core-selector selected="{{selected}}" multi valueattr="value">
+     
+      <template repeat="{{tag in tags}}">
+        
+        <template repeat="{{t in tag}}">
+          <div class="tag_option" on-tap="{{selectedTags}}" value="{{t}}">{{t}}</div>
+        </template>
+
+        <!-- <div class="tag_option" on-tap="{{selectedTags}}" value="{{tag}}">{{tag}}</div> -->
+      </template>
+     
+    </core-selector>
+
+    <hr>
+    <div id="tagDiv">
+      <template repeat="{{tag in selected}}">
+        <div class="tag_selected"><core-icon icon="label"></core-icon>{{tag}}</div>
+      </template>
+    </div>
+    <paper-button raised id="addPlTags" on-tap="{{showTags}}">
+      Save &nbsp;&nbsp;
+      <core-icon icon="loyalty"></core-icon>
+    </paper-button>
+
+  </template>
+  <script>
+    Polymer({
+      created: function() {
+        this.tags = [['Pop', 'Rock', 'EDM'], ['dance','Jazz', 'Cover'], ['Slow', 'Party', 'Workout'], ['Study', 'Work', 'Love'],['Blues', 'HipHop', 'R&B', 'Rap']];
+      },
+      selectedTags: function(){
+        $(this).addClass('tag_selected');
+        console.log(this.selected);
+      },
+      showTags: function(){
+        console.log("DONE");
+      }
+    });
+  </script>
+</polymer-element>
